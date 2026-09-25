@@ -9,6 +9,7 @@ import { CaseStudy } from "@/components/sections/CaseStudy";
 import { Prospecting } from "@/components/sections/Prospecting";
 import { Leads } from "@/components/sections/Leads";
 import { Archive } from "@/components/sections/Archive";
+import { Timeline } from "@/components/sections/Timeline";
 import { Venture } from "@/components/sections/Venture";
 import { Geography } from "@/components/sections/Geography";
 import { Contact } from "@/components/sections/Contact";
@@ -29,9 +30,11 @@ export default function Home() {
           <Prospecting />
           <Leads />
           <Archive />
+          <Timeline />
         </div>
-        <Venture />
+        {/* Chronology → Argentina → Colombia → what's next */}
         <Geography />
+        <Venture />
         <Contact />
       </main>
       <Footer />

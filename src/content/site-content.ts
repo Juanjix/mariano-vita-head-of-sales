@@ -5,7 +5,7 @@
  * Content integrity: every fact below comes from the brief. Do not add
  * employers, dates, clients or metrics that have not been confirmed.
  */
-import type { ArchiveEntry, Localized, ProcessStep, Stat } from "@/types/content";
+import type { ArchiveEntry, Localized, ProcessStep, Stat, TimelineChapter } from "@/types/content";
 
 const L = (es: string, en: string): Localized => ({ es, en });
 
@@ -253,7 +253,7 @@ export const archive = {
     },
     {
       name: L("Piedras preciosas y semipreciosas", "Precious & semi-precious stones"),
-      detail: L("Rio Grande do Sul, Brasil", "Rio Grande do Sul, Brazil"),
+      detail: L("Rio Grande do Sul, Brasil → Buenos Aires", "Rio Grande do Sul, Brazil → Buenos Aires"),
       category: L("Sourcing", "Sourcing"),
     },
     {
@@ -320,8 +320,75 @@ export const archive = {
   ],
 };
 
+/**
+ * Verified chronology (2009–2026). Told as evolution, not employment history.
+ * Restaurant period intentionally concise: no verified details beyond the role area.
+ */
+export const timeline = {
+  label: L("Trayectoria", "Trajectory"),
+  titleLines: [L("Negocios a través", "Built across"), L("de distintos mercados.", "markets.")],
+  statement: [
+    L("El producto fue cambiando.", "The product kept changing."),
+    L("El instinto no.", "The instinct didn’t."),
+  ],
+  body: L(
+    "Desde perfumes y piedras preciosas hasta gastronomía, importaciones y e-commerce: cada etapa implicó entender un mercado, un cliente y un problema comercial diferente.",
+    "From perfumes and precious stones to restaurants, imports and e-commerce — each chapter required understanding a different market, customer and commercial problem.",
+  ),
+  chapters: [
+    {
+      from: 2009,
+      to: 2012,
+      title: L("Perfumes", "Perfumes"),
+      sector: L("Emprendimiento comercial", "Commercial venture"),
+      tags: [
+        L("Perfumes importados de China", "Perfumes imported from China"),
+        L("Abastecimiento de producto", "Product sourcing"),
+        L("Captación de clientes y ventas", "Customer acquisition & sales"),
+      ],
+    },
+    {
+      from: 2012,
+      to: 2015,
+      title: L("Importación de piedras preciosas", "Precious stone imports"),
+      sector: L("Importación", "Import"),
+      tags: [
+        L("Rio Grande do Sul → Buenos Aires", "Rio Grande do Sul → Buenos Aires"),
+        L("Búsqueda y negociación con proveedores", "Supplier sourcing & negotiation"),
+        L("Comercialización", "Commercialization"),
+      ],
+    },
+    {
+      from: 2016,
+      to: 2020,
+      title: L("Gerencia de restaurantes", "Restaurant management"),
+      sector: L("Gastronomía", "Hospitality"),
+    },
+    {
+      from: 2020,
+      to: 2026,
+      title: L("Importaciones & MercadoLibre", "Imports & MercadoLibre"),
+      sector: L("Importación · E-commerce · B2B", "Import · E-commerce · B2B"),
+      tags: [
+        L("Celulares, electrónica y accesorios", "Mobile phones, electronics & accessories"),
+        L("MercadoLibre y venta B2C", "MercadoLibre & B2C sales"),
+        L("Distribución B2B en consignación", "B2B distribution on consignment"),
+        L("Prospección de campo y desarrollo de cuentas", "Field prospecting & account development"),
+      ],
+      note: L(
+        "Capital asignado a mercadería: aprox. USD 15.000 / mes.",
+        "Capital allocated to merchandise: approx. USD 15,000 / month.",
+      ),
+    },
+  ] satisfies TimelineChapter[],
+  today: L("Hoy", "Today"),
+  todayPlace: L("Medellín, Colombia", "Medellín, Colombia"),
+  yearsLabel: L("Período", "Period"),
+};
+
 export const venture = {
-  label: L("Ahora", "Now"),
+  label: L("Lo que sigue", "What’s next"),
+  kicker: L("¿Qué sigue?", "What’s next?"),
   dateline: "Medellín · Colombia · 2026",
   status: L("En desarrollo", "In development"),
   titleLines: [

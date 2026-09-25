@@ -4,8 +4,8 @@ Bilingual (ES/EN) editorial one-page site. Next.js 16 (App Router) · React 19 �
 
 ## Before first run
 
-**Add the photograph:** copy the horse photo to `public/images/mariano-horse.jpg`.
-Adjust its crop per breakpoint in `src/content/photos.ts` (`position.mobile` / `position.desktop`).
+The hero photograph lives at `public/images/mariano-horse.jpg` (1254×1254). A higher-resolution original (≥2400px wide)
+would look sharper on large screens. Adjust its crop per breakpoint in `src/content/photos.ts` (`position.mobile` / `position.desktop`).
 
 ```bash
 npm install
@@ -24,6 +24,7 @@ Deploy: push to GitHub and import in Vercel (no config needed). Set `NEXT_PUBLIC
 | What | File |
 | --- | --- |
 | All copy (ES + EN side by side) | `src/content/site-content.ts` |
+| Professional timeline (verified chapters) | `timeline` in `src/content/site-content.ts` |
 | Contact channels (email, LinkedIn, WhatsApp…) | `src/content/contact-channels.ts` — only listed channels render |
 | Photographs + focal points | `src/content/photos.ts` |
 | Colours, type scale, reveal motion | `src/app/globals.css` |

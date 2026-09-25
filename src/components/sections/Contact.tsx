@@ -12,7 +12,7 @@ export function Contact() {
       aria-labelledby="contact-title"
       className="on-dark shell pt-[clamp(6rem,14vw,13rem)] pb-[clamp(5rem,10vw,9rem)]"
     >
-      <SectionLabel index="10" label={c.label} dark />
+      <SectionLabel index="11" label={c.label} dark />
 
       <h2 id="contact-title" className="mt-[clamp(2.5rem,6vw,5rem)]">
         <span

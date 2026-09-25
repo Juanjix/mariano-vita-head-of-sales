@@ -9,7 +9,7 @@ import { SectionLabel } from "@/components/ui/SectionLabel";
 export function Geography() {
   return (
     <section aria-labelledby="geo-title" className="bg-paper">
-      <div className="shell py-[clamp(6rem,13vw,12rem)]">
+      <div className="shell pt-[clamp(3rem,6vw,5rem)] pb-[clamp(6rem,13vw,12rem)]">
         <SectionLabel index="09" label={g.label} />
         <h2 id="geo-title" className="sr-only">
           {g.from} → {g.to}, {g.toCountry}

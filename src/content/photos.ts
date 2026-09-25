@@ -21,9 +21,10 @@ export const photos = {
     src: "/images/mariano-horse.jpg",
     alt: hero.photoAlt,
     // Intrinsic size is only used for aspect ratio hints; `fill` is used for layout.
-    width: 1600,
-    height: 2000,
-    position: { mobile: "50% 35%", desktop: "50% 30%" },
+    width: 1254,
+    height: 1254,
+    // Square source. Mobile keeps rider + horse head; desktop keeps the face above the headline.
+    position: { mobile: "34% 50%", desktop: "50% 18%" },
   },
 } satisfies Record<string, Photo>;
 

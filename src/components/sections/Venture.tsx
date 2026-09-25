@@ -12,7 +12,7 @@ export function Venture() {
       className="on-dark relative overflow-hidden shell py-[clamp(6rem,14vw,13rem)]"
     >
       <div className="flex flex-wrap items-center justify-between gap-4">
-        <SectionLabel index="08" label={v.label} dark />
+        <SectionLabel index="10" label={v.label} dark />
         <p data-reveal="fade" className="flex items-center gap-3 label text-ivory/80">
           <span aria-hidden="true" className="relative flex h-2 w-2">
             <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-rust-light opacity-60 motion-reduce:hidden" />
@@ -22,10 +22,19 @@ export function Venture() {
         </p>
       </div>
 
-      <p data-reveal="fade" className="mt-[clamp(3rem,7vw,6rem)] label text-rust-light">
+      <p
+        data-reveal="up"
+        className="mt-[clamp(3rem,7vw,6rem)] font-serif text-[clamp(2.25rem,6vw,5.5rem)] leading-none text-rust-light italic"
+      >
+        <T v={v.kicker} />
+      </p>
+      <p data-reveal="fade" className="mt-[clamp(2rem,4vw,3.5rem)] label text-mute-dark">
         {v.dateline}
       </p>
-      <h2 id="venture-title" className="mt-6 display text-[12vw] leading-[0.94] md:text-[clamp(2.2rem,7.6vw,8.25rem)]">
+      <h2
+        id="venture-title"
+        className="mt-6 display text-[12vw] leading-[0.94] md:text-[clamp(2.2rem,7.6vw,8.25rem)] md:leading-[1.02]"
+      >
         {v.titleLines.map((line, i) => (
           <Line key={i} d={i * 110} className={i === 1 ? "md:pl-[14%]" : ""}>
             <T v={line} />

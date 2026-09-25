@@ -37,3 +37,14 @@ export interface ContactChannel {
   display: string;
   href: string;
 }
+
+/** A verified chapter of the professional chronology. */
+export interface TimelineChapter {
+  from: number;
+  to: number;
+  title: Localized;
+  sector: Localized;
+  /** Only verified context. Omit rather than invent. */
+  tags?: Localized[];
+  note?: Localized;
+}
