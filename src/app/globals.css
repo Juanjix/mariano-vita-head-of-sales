@@ -13,6 +13,17 @@
   --color-rust: #9f4527;
   --color-rust-light: #d0764f;
 
+  /* Te Lo Vendo Yo — automotive editorial: graphite, bone, steel, one signal colour */
+  --color-graphite: #121315;
+  --color-graphite-2: #1b1c1f;
+  --color-graphite-3: #26282c;
+  --color-steel: #8e939a;
+  --color-steel-light: #c3c7cc;
+  --color-bone: #efeeea;
+  --color-bone-2: #e3e2dd;
+  --color-signal: #ff6a2b;
+  --color-signal-ink: #b8430f;
+
   --font-serif: var(--font-display), "Times New Roman", serif;
   --font-sans: var(--font-grotesk), ui-sans-serif, system-ui, sans-serif;
 
@@ -39,7 +50,6 @@
 }
 
 html {
-  scroll-behavior: smooth;
   scroll-padding-top: var(--nav-h);
   -webkit-text-size-adjust: 100%;
   text-rendering: optimizeLegibility;
@@ -99,6 +109,32 @@ body {
   line-height: 1.4;
 }
 
+@utility tl-display {
+  font-family: var(--font-sans);
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: -0.032em;
+  word-spacing: 0.06em;
+  line-height: 0.88;
+}
+
+@utility tl-label {
+  font-family: var(--font-sans);
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  line-height: 1.4;
+}
+
+@utility tl-rule {
+  border-color: var(--tl-line);
+}
+
+@utility tl-rule-light {
+  border-color: var(--tl-line-light);
+}
+
 @utility num {
   font-variant-numeric: lining-nums tabular-nums;
 }
@@ -134,94 +170,119 @@ body {
   background-size: 100% 1px;
 }
 
-/* ───────────────────────── Reveal system ─────────────────────────
-   Elements carry data-reveal; a single IntersectionObserver adds
-   data-shown. Without JS (no .js class) everything is visible.        */
-.js [data-reveal] {
-  transition:
-    opacity 0.9s var(--ease-out-expo),
-    transform 1.1s var(--ease-out-expo),
-    clip-path 1.3s var(--ease-out-expo);
-  transition-delay: var(--d, 0ms);
-}
-.js [data-reveal="up"]:not([data-shown]) {
-  opacity: 0;
-  transform: translate3d(0, 1.75rem, 0);
-}
-.js [data-reveal="fade"]:not([data-shown]) {
-  opacity: 0;
-}
-/* Line mask: parent clips, child slides up */
-[data-reveal="line"] {
+/* ───────────────────────── Motion pre-states ─────────────────────────
+   GSAP (+ ScrollTrigger) owns every reveal and scroll animation. CSS only
+   holds the *initial* hidden state, and only when JS runs (.js) and motion is
+   allowed — so the page is fully visible without JS or with reduced motion.
+   A failsafe in layout.tsx reveals everything if the motion runtime never boots. */
+[data-reveal="line"],
+.mask-line {
   display: block;
   overflow: clip;
   overflow-clip-margin: 0.12em;
   padding-bottom: 0.04em;
 }
-[data-reveal="line"] > span {
+[data-reveal="line"] > span,
+.mask-line > span {
   display: block;
-  transition: transform 1.15s var(--ease-out-expo);
-  transition-delay: var(--d, 0ms);
-}
-.js [data-reveal="line"]:not([data-shown]) > span {
-  transform: translate3d(0, 108%, 0);
-}
-.js [data-reveal="clip"]:not([data-shown]) {
-  clip-path: inset(100% 0 0 0);
-}
-.js [data-reveal="clip"] {
-  clip-path: inset(0 0 0 0);
-}
-.js [data-reveal="rule"] {
-  transform-origin: left;
-}
-.js [data-reveal="rule"]:not([data-shown]) {
-  transform: scaleX(0);
 }
 
-/* Hero entrance — CSS only, runs immediately so LCP is not delayed by JS */
-@keyframes rise {
-  from {
-    transform: translate3d(0, 105%, 0);
+@media (prefers-reduced-motion: no-preference) {
+  .js [data-reveal="up"]:not([data-shown]),
+  .js [data-reveal="fade"]:not([data-shown]) {
+    opacity: 0;
+    visibility: hidden;
   }
-  to {
-    transform: none;
+  .js [data-reveal="line"]:not([data-shown]) > span {
+    transform: translate3d(0, 175%, 0);
   }
-}
-@keyframes fade-in {
-  from {
+  .js [data-reveal="rule"]:not([data-shown]) {
+    transform: scaleX(0);
+  }
+  /* Hero + nav: hidden only until the GSAP intro timeline takes over (html.intro-ready). */
+  .js:not(.intro-ready) [data-nav],
+  .js:not(.intro-ready) [data-hero-fade] {
     opacity: 0;
   }
-  to {
-    opacity: 1;
+  .js:not(.intro-ready) [data-hero-line] > span {
+    transform: translate3d(0, 175%, 0);
   }
-}
-@keyframes unveil {
-  from {
+  .js:not(.intro-ready) [data-hero] [data-media] {
     clip-path: inset(0 0 100% 0);
-    transform: scale(1.08);
   }
-  to {
-    clip-path: inset(0 0 0 0);
-    transform: scale(1);
+  /* Future photographs: <div data-reveal="media"> wrapping an EditorialImage-like stack. */
+  /* Clip the child, not the observed element (a fully clipped target never intersects). */
+  .js [data-reveal="media"]:not([data-shown]) > * {
+    clip-path: inset(100% 0 0 0);
   }
 }
-.hero-rise {
-  animation: rise 1.2s var(--ease-out-expo) both;
-  animation-delay: var(--d, 0ms);
+
+/* Process stages, desktop pinned mode (class toggled by GSAP matchMedia). */
+.is-staged [data-steps] {
+  position: relative;
+  height: clamp(19rem, 46vh, 30rem);
 }
-.hero-fade {
-  animation: fade-in 1.2s var(--ease-out-expo) both;
-  animation-delay: var(--d, 0ms);
+.is-staged [data-step] {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  border: 0;
+  padding: 0;
 }
-.hero-unveil {
-  animation: unveil 1.6s var(--ease-out-expo) both;
+.is-staged [data-spine],
+.is-staged [data-step-dot] {
+  display: none;
+}
+.is-staged [data-instruments] {
+  display: block;
+}
+.is-staged [data-step] h3 {
+  font-size: clamp(4.5rem, 8.4vw, 9rem);
+}
+
+/* Decorative progress fills start empty; only GSAP fills them (stay empty with reduced motion). */
+[data-case-rule] {
+  transform: scaleX(0);
+}
+[data-tl-spine],
+[data-spine-fill] {
+  transform: scaleY(0);
+}
+
+/* ───────────────────────── Te Lo Vendo Yo ───────────────────────── */
+body:has(.tl-page) {
+  background: var(--color-graphite);
+}
+.tl-page {
+  --tl-line: color-mix(in oklab, var(--color-bone) 14%, transparent);
+  --tl-line-light: color-mix(in oklab, var(--color-graphite) 14%, transparent);
+  background: var(--color-graphite);
+  color: var(--color-bone);
+  color-scheme: dark;
+}
+.tl-page ::selection {
+  background: var(--color-signal);
+  color: var(--color-graphite);
+}
+.tl-page :focus-visible {
+  outline-color: var(--color-signal);
+}
+.tl-light {
+  background: var(--color-bone);
+  color: var(--color-graphite);
+  color-scheme: light;
+}
+.tl-light :focus-visible {
+  outline-color: var(--color-signal-ink);
+}
+
+/* Programmatic focus targets (anchor navigation) don't need a ring. */
+[tabindex="-1"]:focus {
+  outline: none;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  html {
-    scroll-behavior: auto;
-  }
   *,
   *::before,
   *::after {
@@ -230,17 +291,4 @@ body {
     transition-duration: 0.001ms !important;
     transition-delay: 0ms !important;
   }
-  .js [data-reveal]:not([data-shown]),
-  .js [data-reveal] > span {
-    opacity: 1 !important;
-    transform: none !important;
-    clip-path: none !important;
-  }
-}
-
-.js [data-reveal="bar"] {
-  transform-origin: bottom;
-}
-.js [data-reveal="bar"]:not([data-shown]) {
-  transform: scaleY(0);
 }

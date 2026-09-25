@@ -210,7 +210,11 @@ export const prospecting = {
 
 export const leads = {
   label: L("Filosofía", "Philosophy"),
-  quote: L("Un lead solamente muere cuando se deja de trabajar.", "A lead only dies when you stop working it."),
+  /** Two phrase groups so the second half can be emphasised; reads as one sentence. */
+  quote: [
+    L("Un lead solamente muere", "A lead only dies"),
+    L("cuando se deja de trabajar.", "when you stop working it."),
+  ],
   attribution: "— Mariano Vita",
   lead: L(
     "Un primer “no” no siempre significa que no hay oportunidad. Los prospectos valiosos se revisitan con:",
@@ -387,26 +391,25 @@ export const timeline = {
 };
 
 export const venture = {
-  label: L("Lo que sigue", "What’s next"),
+  label: L("Proyecto actual", "Current venture"),
   kicker: L("¿Qué sigue?", "What’s next?"),
   dateline: "Medellín · Colombia · 2026",
-  status: L("En desarrollo", "In development"),
-  titleLines: [
-    L("Convertir inventario", "Turning slow-moving"),
-    L("de baja rotación", "inventory"),
-    L("en oportunidades.", "into opportunity."),
-  ],
+  status: L("Proyecto nuevo", "New venture"),
+  brand: "Te Lo Vendo Yo",
+  titleLines: [L("Convertimos inventario", "We turn inventory"), L("en ventas.", "into sales.")],
   body: [
     L(
-      "Estoy explorando un modelo comercial para ayudar a concesionarios a generar demanda sobre vehículos que tradicionalmente rotan más lento.",
-      "I’m exploring a commercial model designed to help car dealerships generate demand for vehicles that traditionally turn over more slowly.",
+      "Una solución comercial para concesionarios que combina contenido, generación de demanda y seguimiento comercial para ayudar a mover inventario.",
+      "A commercial solution for dealerships that combines content, demand generation and commercial follow-up to help move inventory.",
     ),
     L(
       "El mismo principio de siempre: encontrar la ineficiencia comercial y construir el negocio a su alrededor.",
       "The same principle as always: find the commercial inefficiency and build the business around it.",
     ),
   ],
-  sector: L("Industria automotriz", "Automotive industry"),
+  sector: L("Industria automotriz · Concesionarios", "Automotive · Dealerships"),
+  cta: L("Conocer el proyecto", "Explore the project"),
+  href: "/te-lo-vendo-yo",
 };
 
 export const geography = {

@@ -83,6 +83,7 @@ export function Nav() {
 
   return (
     <header
+      data-nav
       className={`fixed inset-x-0 top-0 z-50 transition-[transform,background-color,color,border-color] duration-500 ease-out-expo ${
         hidden && !open ? "-translate-y-full" : "translate-y-0"
       } ${solid ? "border-b rule bg-ivory/95 text-ink backdrop-saturate-150" : "border-b border-transparent text-ivory"}`}

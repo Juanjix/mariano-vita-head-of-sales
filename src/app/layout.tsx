@@ -39,7 +39,11 @@ export const viewport: Viewport = {
 };
 
 // Marks that JS is running so reveal styles only hide content when they can be revealed.
-const jsFlag = `document.documentElement.classList.add('js')`;
+const jsFlag = [
+  "var d=document.documentElement;d.classList.add('js');",
+  // Failsafe: if the motion runtime never boots, drop every pre-hidden state.
+  "setTimeout(function(){if(!window.__motionReady){d.classList.remove('js');}d.classList.add('intro-ready');},4000);",
+].join("");
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (

@@ -1,6 +1,6 @@
 import { Nav } from "@/components/layout/Nav";
 import { Footer } from "@/components/layout/Footer";
-import { RevealObserver } from "@/components/ui/RevealObserver";
+import { MotionRuntime } from "@/components/motion/MotionRuntime";
 import { Hero } from "@/components/sections/Hero";
 import { Numbers } from "@/components/sections/Numbers";
 import { Manifesto } from "@/components/sections/Manifesto";
@@ -14,10 +14,13 @@ import { Venture } from "@/components/sections/Venture";
 import { Geography } from "@/components/sections/Geography";
 import { Contact } from "@/components/sections/Contact";
 import { JsonLd } from "@/components/layout/JsonLd";
+import { DocumentMeta } from "@/lib/i18n";
+import { seo } from "@/content/site-content";
 
 export default function Home() {
   return (
     <>
+      <DocumentMeta seo={seo} />
       <Nav />
       <main id="main" tabIndex={-1} className="outline-none">
         <Hero />
@@ -38,7 +41,7 @@ export default function Home() {
         <Contact />
       </main>
       <Footer />
-      <RevealObserver />
+      <MotionRuntime />
       <JsonLd />
     </>
   );

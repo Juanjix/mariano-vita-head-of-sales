@@ -1,6 +1,6 @@
 "use client";
 
-import { useSyncExternalStore } from "react";
+import { useEffect, useSyncExternalStore } from "react";
 import { DEFAULT_LOCALE, LOCALES, type Locale, type Localized } from "@/types/content";
 import { seo } from "@/content/site-content";
 
@@ -17,10 +17,14 @@ function isLocale(value: unknown): value is Locale {
   return typeof value === "string" && (LOCALES as readonly string[]).includes(value);
 }
 
+type PageSeo = { title: Localized; description: Localized };
+/** SEO copy of the page currently mounted (each route registers its own via <DocumentMeta>). */
+let pageSeo: PageSeo = seo;
+
 function applyToDocument(locale: Locale) {
   document.documentElement.lang = locale;
-  document.title = seo.title[locale];
-  document.querySelector('meta[name="description"]')?.setAttribute("content", seo.description[locale]);
+  document.title = pageSeo.title[locale];
+  document.querySelector('meta[name="description"]')?.setAttribute("content", pageSeo.description[locale]);
 }
 
 function init() {
@@ -73,4 +77,19 @@ export function useT() {
 export function T({ v }: { v: Localized }) {
   const locale = useLocale();
   return <>{v[locale]}</>;
+}
+
+/**
+ * Registers the route's localized title/description so switching language
+ * updates the right document metadata on every route.
+ */
+export function DocumentMeta({ seo: routeSeo }: { seo: PageSeo }) {
+  const locale = useLocale();
+  useEffect(() => {
+    pageSeo = routeSeo;
+    // Next applies server metadata (Spanish) on navigation; re-apply after it.
+    const raf = requestAnimationFrame(() => applyToDocument(locale));
+    return () => cancelAnimationFrame(raf);
+  }, [routeSeo, locale]);
+  return null;
 }
